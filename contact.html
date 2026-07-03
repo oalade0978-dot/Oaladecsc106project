@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me | MVA Portfolio</title>
+  <style>
+    /* ====== THEME: WHITE, NAVY, RED, LIGHT BROWN ====== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      flex-grow: 1;
+      width: 100%;
+    }
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 20px;
+    }
+    nav a {
+      padding: 10px 15px;
+      display: inline-block;
+      text-decoration: none;
+      color: #333;
+      border-right: 1px solid #ddd;
+    }
+    nav a:last-child {border-right: none;}
+    nav a.active {background: #1a2b4c; color: #fff; font-weight: bold;} /* NAVY */
+    nav a:hover {background: #c62828; color: #fff;} /* RED HOVER */
+    
+    .banner {
+      background: #d7c9b6; /* LIGHT BROWN */
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .banner h1 {
+      margin: 0;
+      font-size: 36px;
+      color: #1a2b4c; /* NAVY */
+      font-family: Georgia, serif;
+    }
+    .content {
+      padding: 30px 40px;
+    }
+    .content h2 {
+      color: #1a2b4c; /* NAVY */
+      border-bottom: 2px solid #d7c9b6; /* LIGHT BROWN LINE */
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    
+    /* ====== FORM STYLES ====== */
+    .contact-form label {
+      display: block;
+      font-weight: bold;
+      color: #1a2b4c;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    .contact-form input, 
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+    }
+    .contact-form input:focus, 
+    .contact-form textarea:focus {
+      border-color: #c62828; /* RED */
+      outline: none;
+    }
+    .contact-form button {
+      background: #1a2b4c; /* NAVY */
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.2s;
+    }
+    .contact-form button:hover {
+      background: #c62828; /* RED */
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+      color: #666;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    
+    <!-- NAV -->
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About me</a>
+      <a href="projects.html">Projects</a>
+      <a href="planner.html">Academic planner</a>
+      <a href="contact.html" class="active">Contact me</a>
+    </nav>
+
+    <!-- BANNER -->
+    <div class="banner">
+      <h1>Contact Me</h1>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <h2>Get In Touch</h2>
+      <p>Please fill the form below to contact me.</p>
+
+      <form class="contact-form" action="#" method="post">
+        <!-- 1. Name -->
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <!-- 2. Email Address -->
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <!-- 3. Phone Number -->
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <!-- 4. Message -->
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      © Copyright 2025 MVA Open University. All Rights Reserved.
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Planner | MVA Portfolio</title>
+  <style>
+    /* ====== SAME THEME AS CONTACT + PLANNER PAGES ====== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #333;
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      border: 1px solid #ddd;
+    }
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 0 20px;
+    }
+    nav a {
+      padding: 12px 15px;
+      display: inline-block;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      border-right: 1px solid #ddd;
+    }
+    nav a:last-child {border-right: none;}
+    nav a.active {background: #1a2b4c; color: #fff; font-weight: bold;} /* NAVY */
+    nav a:hover {background: #c62828; color: #fff;} /* RED */
+    
+    .banner {
+      background: #d7c9b6; /* LIGHT BROWN */
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .banner h1 {
+      margin: 0;
+      font-size: 36px;
+      color: #1a2b4c; /* NAVY */
+      font-family: Georgia, serif;
+    }
+    .content {
+      padding: 30px 40px;
+    }
+    .content h2 {
+      color: #1a2b4c;
+      border-bottom: 2px solid #d7c9b6;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    
+    /* ====== INTERACTIVE FORM + TABLE ====== */
+    .add-task {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .add-task input {
+      flex: 1 1 150px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .add-task input:focus {border-color: #c62828; outline: none;} /* RED FOCUS */
+    .add-task button {
+      background: #1a2b4c; /* NAVY */
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .add-task button:hover {background: #c62828;} /* RED HOVER */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    table th {
+      background: #1a2b4c; /* NAVY */
+      color: #fff;
+      padding: 12px;
+      text-align: left;
+    }
+    table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+    }
+    table tr:nth-child(even) {background: #f8f8f8;}
+    .btn-table {
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      margin-right: 5px;
+    }
+    .btn-done {background: #1a2b4c; color: #fff;} /* NAVY */
+    .btn-del {background: #c62828; color: #fff;} /* RED */
+    .done-row td {
+      text-decoration: line-through;
+      color: #888;
+      background: #f0f0f0;
+    }
+    .empty-msg td {
+      text-align: center;
+      font-style: italic;
+      color: #777;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    
+    <!-- NAV - SAME AS ALL PAGES -->
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About me</a>
+      <a href="projects.html">Projects</a>
+      <a href="usefulplanner.html" class="active">Academic planner</a>
+      <a href="contact.html">Contact me</a>
+    </nav>
+
+    <!-- BANNER - SAME LIGHT BROWN -->
+    <div class="banner">
+      <h1>Academic Planner</h1>
+    </div>
+
+    <!-- CONTENT - SAME WHITE BOX -->
+    <div class="content">
+      <h2>My Semester Tasks</h2>
+      
+      <!-- ADD TASK FORM -->
+      <div class="add-task">
+        <input type="text" id="taskTitle" placeholder="Task e.g. CSC 201 Assignment">
+        <input type="date" id="taskDate">
+        <button onclick="addTask()">Add Task</button>
+      </div>
+
+      <!-- TASK TABLE -->
+      <table id="taskTable">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Due Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="taskBody">
+          <tr class="empty-msg"><td colspan="3">No tasks yet. Add one above.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem('mvaPlannerTable')) || [];
+    document.addEventListener('DOMContentLoaded', render);
+
+    function addTask() {
+      const title = document.getElementById('taskTitle').value.trim();
+      const date = document.getElementById('taskDate').value;
+      if (title === '' || date === '') return alert('Enter Task and Due Date');
+      
+      tasks.push({id: Date.now(), title, date, done: false});
+      save();
+      render();
+      document.getElementById('taskTitle').value = '';
+      document.getElementById('taskDate').value = '';
+    }
+
+    function render() {
+      const body = document.getElementById('taskBody');
+      if (tasks.length === 0) {
+        body.innerHTML = '<tr class="empty-msg"><td colspan="3">No tasks yet. Add one above.</td></tr>';
+        return;
+      }
+      body.innerHTML = tasks.map(t => `
+        <tr class="${t.done ? 'done-row' : ''}">
+          <td>${t.title}</td>
+          <td>${new Date(t.date+'T00:00:00').toLocaleDateString('en-GB')}</td>
+          <td>
+            <button class="btn-table btn-done" onclick="toggle(${t.id})">${t.done ? 'Undo' : 'Done'}</button>
+            <button class="btn-table btn-del" onclick="del(${t.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggle(id) {
+      tasks = tasks.map(t => t.id === id ? {...t, done: !t.done} : t);
+      save(); render();
+    }
+    function del(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      save(); render();
+    }
+    function save() {
+      localStorage.setItem('mvaPlannerTable', JSON.stringify(tasks));
+    }
+  </script>
+</body>
+</html>
